@@ -1,2 +1,2 @@
-# sudoku-solver
+# Sudoku solver
 Solve Sudokus instantly!
