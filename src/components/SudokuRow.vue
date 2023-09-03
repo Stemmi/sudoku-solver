@@ -1,7 +1,14 @@
 <template>
     <tr>
         
-        <SudokuCell v-for="cell in row" :cell="cell"/>
+        <SudokuCell
+            v-for="cell, index in row"
+            :cell="cell"
+            :selectedIndex="selectedIndex"
+            :cellIndex="[rowIndex, index]"
+            @updateSelected="handleSelection"
+            @updateValue="handleValueUpdate"
+        />
 
     </tr>
 </template>
@@ -14,8 +21,19 @@ export default {
         SudokuCell
     },
     props: [
-        "row"
-    ]
+        "row", "rowIndex", "selectedIndex"
+    ],
+    emits: [
+        "updateSelected", "updateValue"
+    ],
+    methods: {
+        handleSelection(cellIndex) {
+            this.$emit("updateSelected", cellIndex);
+        },
+        handleValueUpdate(updatedCell) {
+            this.$emit("updateValue", updatedCell);
+        }
+    }
 }
 </script>
 

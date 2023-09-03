@@ -1,7 +1,14 @@
 <template>
     <table>
         
-        <SudokuRow v-for="row in sudoku" :row="row"/>
+        <SudokuRow
+            v-for="row, index in sudoku"
+            :row="row"
+            :rowIndex="index"
+            :selectedIndex="selectedIndex"
+            @updateSelected="select"
+            @updateValue="handleValueUpdate"
+        />
 
     </table>
 </template>
@@ -15,7 +22,8 @@
         },
         data() {
             return {
-                sudoku: this.createEmptySudoku()
+                sudoku: this.createEmptySudoku(),
+                selectedIndex: [0,0]
             }
         },
         methods: {
@@ -29,6 +37,26 @@
                     sudoku.push(row);
                 }
                 return sudoku;
+            },
+            selectNext() {
+                this.selectedIndex[1]++;
+                if (this.selectedIndex[1] > 8) {
+                    this.selectedIndex[0]++;
+                    this.selectedIndex[1] = 0;
+                }
+            },
+            select(index) {
+                this.selectedIndex = index;
+            },
+            handleValueUpdate(cell) {
+                if (!this.validate(cell.value)) this.sudoku[cell.index[0]][cell.index[1]] = 0;
+                this.sudoku[cell.index[0]][cell.index[1]] = cell.value;
+                this.selectNext();
+            },
+            validate(value) {
+                if (!Number.isInteger(value)) return;
+                else if (value >= 1 && value <= 9) return value;
+                else return;
             }
         }
     }

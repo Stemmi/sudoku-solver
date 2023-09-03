@@ -1,12 +1,14 @@
 <template>
-    <td @click="selected=true">
+    <td @click="select">
         <input
-            v-if="selected"
+            v-if="isSelected"
             type="text"
             size="1"
             @vue:mounted="({ el }) => el.focus()"
+            @input="updateValue"
         >
-    {{ value }}
+        <span v-else>{{ value }}</span>
+        
 
     </td>
 </template>
@@ -15,20 +17,33 @@
     export default {
         data() {
             return {
-                selected: false
             }
         },
         props: [
-            "cell"
+            "cell", "cellIndex", "selectedIndex"
+        ],
+        emits: [
+            "updateSelected", "updateValue"
         ],
         methods: {
-
+            select() {
+                this.$emit("updateSelected", this.cellIndex);
+            },
+            updateValue(event) {
+                this.$emit("updateValue", {
+                    index: this.cellIndex,
+                    value: event.target.value
+                })
+            } 
         },
         computed: {
             value() {
-                if (!Number.isInteger(+this.cell)) return;
-                else if (this.cell >= 1 && this.cell <= 9) return this.cell;
-                else return;
+                return this.cell || '';
+            },
+            isSelected() {
+                return (this.cellIndex[0] === this.selectedIndex[0]
+                    && this.cellIndex[1] === this.selectedIndex[1]
+                );
             }
         }
     }
