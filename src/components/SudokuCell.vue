@@ -9,6 +9,7 @@
                 @vue:mounted="({ el }) => el.focus()"
                 @input="updateValue"
                 @keydown="handleSpecialKeys"
+                @blur="unselect"
             >
         </form>
         <span v-else>{{ value }}</span>
@@ -31,6 +32,9 @@
         methods: {
             select() {
                 this.$emit("updateSelected", this.cellIndex);
+            },
+            unselect() {
+                this.$emit("updateSelected", undefined);
             },
             updateValue(event) {
                 const value = event.target.value;
