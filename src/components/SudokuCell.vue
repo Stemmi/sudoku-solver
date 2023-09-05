@@ -44,16 +44,16 @@
                 })
             },
             handleSpecialKeys(event) {
-                const targetIndex = [this.cellIndex[0],this.cellIndex[1]];
+                let targetIndex = [this.cellIndex[0],this.cellIndex[1]];
                 switch (event.code) {
                     case 'ArrowDown':
                         targetIndex[0]++;
-                        if (targetIndex[0] > 8) targetIndex[0] = 0;
+                        if (targetIndex[0] > 8) targetIndex[0] = 8;
                         this.$emit("updateSelected", targetIndex);
                         break;
                     case 'ArrowUp':
                         targetIndex[0]--;
-                        if (targetIndex[0] < 0) targetIndex[0] = 8;
+                        if (targetIndex[0] < 0) targetIndex[0] = 0;
                         this.$emit("updateSelected", targetIndex);
                         break;
                     case 'ArrowLeft':
@@ -61,7 +61,7 @@
                         if (targetIndex[1] < 0) {
                             targetIndex[1] = 8;
                             targetIndex[0]--;
-                            if (targetIndex[0] < 0) targetIndex[0] = 8;
+                            if (targetIndex[0] < 0) targetIndex = [0,0];
                         }
                         this.$emit("updateSelected", targetIndex);
                         break;
@@ -73,7 +73,7 @@
                         if (targetIndex[1] > 8) {
                             targetIndex[1] = 0;
                             targetIndex[0]++;
-                            if (targetIndex[0] > 8) targetIndex[0] = 0;
+                            if (targetIndex[0] > 8) targetIndex = [8,8];
                         }
                         this.$emit("updateSelected", targetIndex);
                         break;
@@ -86,6 +86,7 @@
                 // return this.cell;
             },
             isSelected() {
+                if (!this.selectedIndex) return false;
                 return (this.cellIndex[0] === this.selectedIndex[0]
                     && this.cellIndex[1] === this.selectedIndex[1]
                 );

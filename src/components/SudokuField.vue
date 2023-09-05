@@ -45,9 +45,16 @@
                     this.selectedIndex[0]++;
                     this.selectedIndex[1] = 0;
                 }
+                if (this.selectedIndex[0] > 8) {
+                    this.selectedIndex = [8,8];
+                    // this.selectSolveButton();
+                }
             },
             select(index) {
                 this.selectedIndex = index;
+            },
+            selectSolveButton() {
+                return;
             },
             handleValueUpdate(cell) {
                 this.sudoku[cell.index[0]][cell.index[1]] = cell.value;
