@@ -1,11 +1,11 @@
 <template>
     <main>
-        <p>Type or paste a Sudoku here:</p>
-        
+        <h2>Type in a Sudoku here:</h2>
+        <!-- <p>Numbers 1-9, or:<br />
+            0, Space, →, or Enter for en empty cell</p> -->
         <SudokuField />
-        <button>Solve</button><br />
+        <button>Solve</button>
         <p>Text / Description</p>
-        <br />
     </main>
 </template>
 
@@ -22,6 +22,12 @@
 
 
 <style>
+    h2 {
+        text-align: center;
+        font-weight: normal;
+        font-size: 1.3em;
+        margin: 15px;
+    }
     button {
         display: block;
         margin: 20px auto;
