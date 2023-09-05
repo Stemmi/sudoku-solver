@@ -50,14 +50,8 @@
                 this.selectedIndex = index;
             },
             handleValueUpdate(cell) {
-                if (!this.validate(cell.value)) this.sudoku[cell.index[0]][cell.index[1]] = 0;
                 this.sudoku[cell.index[0]][cell.index[1]] = cell.value;
                 this.selectNext();
-            },
-            validate(value) {
-                if (!Number.isInteger(value)) return;
-                else if (value >= 1 && value <= 9) return value;
-                else return;
             }
         }
     }
