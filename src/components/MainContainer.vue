@@ -4,7 +4,8 @@
         
         <SudokuField />
         <button>Solve</button><br />
-        Text / Description<br />
+        <p>Text / Description</p>
+        <br />
     </main>
 </template>
 
@@ -21,7 +22,13 @@
 
 
 <style>
-    h1 {
-        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    button {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        border:  1px solid black;
+        border-radius: 20px;
+        background-color: rgb(203, 216, 240);
+        font-size: 1.3em;
     }
 </style>

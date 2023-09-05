@@ -53,9 +53,9 @@
             select(index) {
                 this.selectedIndex = index;
             },
-            selectSolveButton() {
-                return;
-            },
+            // selectSolveButton() {
+            //     return;
+            // },
             handleValueUpdate(cell) {
                 this.sudoku[cell.index[0]][cell.index[1]] = cell.value;
                 this.selectNext();
@@ -64,11 +64,9 @@
     }
 </script>
 
-
-
 <style>
     table {
-        margin: 10px 0;
+        margin: 10px auto;
         border-collapse: collapse;
         border: 2px solid black;
     }
