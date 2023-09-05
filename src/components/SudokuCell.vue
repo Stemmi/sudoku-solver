@@ -3,10 +3,12 @@
         <form ref="inputForm" v-if="isSelected">
             <input
                 :value="inputValue"
+                :placeholder="cell||' '"
                 type="text"
                 size="1"
                 @vue:mounted="({ el }) => el.focus()"
                 @input="updateValue"
+                @keydown="handleSpecialKeys"
             >
         </form>
         <span v-else>{{ value }}</span>
@@ -40,7 +42,43 @@
                     index: this.cellIndex,
                     value: +event.target.value
                 })
-            } 
+            },
+            handleSpecialKeys(event) {
+                const targetIndex = [this.cellIndex[0],this.cellIndex[1]];
+                switch (event.code) {
+                    case 'ArrowDown':
+                        targetIndex[0]++;
+                        if (targetIndex[0] > 8) targetIndex[0] = 0;
+                        this.$emit("updateSelected", targetIndex);
+                        break;
+                    case 'ArrowUp':
+                        targetIndex[0]--;
+                        if (targetIndex[0] < 0) targetIndex[0] = 8;
+                        this.$emit("updateSelected", targetIndex);
+                        break;
+                    case 'ArrowLeft':
+                        targetIndex[1]--;
+                        if (targetIndex[1] < 0) {
+                            targetIndex[1] = 8;
+                            targetIndex[0]--;
+                            if (targetIndex[0] < 0) targetIndex[0] = 8;
+                        }
+                        this.$emit("updateSelected", targetIndex);
+                        break;
+                    case 'Enter':
+                    case 'NumpadEnter':
+                        event.preventDefault();
+                    case 'ArrowRight':
+                        targetIndex[1]++;
+                        if (targetIndex[1] > 8) {
+                            targetIndex[1] = 0;
+                            targetIndex[0]++;
+                            if (targetIndex[0] > 8) targetIndex[0] = 0;
+                        }
+                        this.$emit("updateSelected", targetIndex);
+                        break;
+                }
+            }
         },
         computed: {
             value() {
