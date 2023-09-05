@@ -8,8 +8,6 @@
             @input="updateValue"
         >
         <span v-else>{{ value }}</span>
-        
-
     </td>
 </template>
 
@@ -32,13 +30,14 @@
             updateValue(event) {
                 this.$emit("updateValue", {
                     index: this.cellIndex,
-                    value: event.target.value
+                    value: +event.target.value || 0
                 })
             } 
         },
         computed: {
             value() {
                 return this.cell || '';
+                // return this.cell;
             },
             isSelected() {
                 return (this.cellIndex[0] === this.selectedIndex[0]
