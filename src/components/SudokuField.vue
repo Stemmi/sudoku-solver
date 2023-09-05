@@ -1,24 +1,25 @@
 <template>
     <table>
-        
-        <SudokuRow
-            v-for="row, index in sudoku"
-            :row="row"
-            :rowIndex="index"
-            :selectedIndex="selectedIndex"
-            @updateSelected="select"
-            @updateValue="handleValueUpdate"
-        />
-
+        <tr v-for="row, rowIndex in sudoku">
+            <SudokuCell
+                v-for="cell, columnIndex in row"
+                :cell="cell"
+                :selectedIndex="selectedIndex"
+                :cellIndex="[rowIndex, columnIndex]"
+                @updateSelected="select"
+                @updateValue="handleValueUpdate"
+            />
+        </tr>
     </table>
 </template>
 
 <script>
-    import SudokuRow from './SudokuRow.vue';
+    import SudokuCell from './SudokuCell.vue';
+
 
     export default {
         components: {
-            SudokuRow
+            SudokuCell
         },
         data() {
             return {
