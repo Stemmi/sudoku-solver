@@ -15,30 +15,23 @@
 
 <script>
     import SudokuCell from './SudokuCell.vue';
-
-
+    
     export default {
         components: {
             SudokuCell
         },
         data() {
             return {
-                sudoku: this.createEmptySudoku(),
                 selectedIndex: [0,0]
             }
         },
+        props: [
+            "sudoku"
+        ],
+        emits: [
+            "updateSudoku"
+        ],
         methods: {
-            createEmptySudoku() {
-                const sudoku = [];
-                for (let i = 0; i < 9; i++) {
-                    const row = [];
-                    for (let j = 0; j < 9; j++) {
-                        row.push(0);
-                    }
-                    sudoku.push(row);
-                }
-                return sudoku;
-            },
             selectNext() {
                 this.selectedIndex[1]++;
                 if (this.selectedIndex[1] > 8) {
@@ -57,7 +50,7 @@
             //     return;
             // },
             handleValueUpdate(cell) {
-                this.sudoku[cell.index[0]][cell.index[1]] = cell.value;
+                this.$emit('updateSudoku', cell);
                 this.selectNext();
             }
         }
