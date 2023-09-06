@@ -1,4 +1,4 @@
-import cloneDeep from 'lodash.clonedeep'; // Needed for deep cloning a sudoku object in guessing mode
+import sudokuService from './sudokuService';
 
 class SudokuField {
     /**
@@ -210,7 +210,7 @@ class SudokuSolver {
         const guesser = new SudokuSolver();
         let possible = field.possibleValues;
         for (let p = 0; p < possible.length; p++) {
-            guesser.sudoku = cloneDeep(this.sudoku);
+            guesser.sudoku = sudokuService.clone(this.sudoku);
             guesser.solvedFields = this.solvedFields;
             guesser.removedPossibleValues = this.removedPossibleValues;
             guesser.rounds = this.rounds;
@@ -220,7 +220,7 @@ class SudokuSolver {
             let solved = guesser.solve(false);
             
             if (solved) {
-                this.sudoku = cloneDeep(guesser.sudoku);
+                this.sudoku = sudokuService.clone(guesser.sudoku);
                 this.solvedFields = guesser.solvedFields;
                 this.removedPossibleValues = guesser.removedPossibleValues;
                 this.rounds = guesser.rounds;
