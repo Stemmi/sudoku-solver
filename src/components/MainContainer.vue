@@ -18,13 +18,13 @@
 
 <script>
     import SudokuField from './SudokuField.vue';
-    import sudokus from '../services/sudokus.js';
+    import sudokuService from '../services/sudokuService.js';
     import SudokuSolver from '../services/solver.js';
 
     export default {
         data() {
             return {
-                sudoku: sudokus.createEmpty(),
+                sudoku: sudokuService.empty,
             }
         },
         components: {
@@ -33,7 +33,7 @@
         methods: {
             chooseSudoku(event) {
                 if (event.target.tagName != "BUTTON") return;
-                this.sudoku = sudokus[event.target.id];
+                this.sudoku = sudokuService[event.target.id];
             },
             handleValueUpdate(cell) {
                 this.sudoku[cell.index[0]][cell.index[1]] = cell.value;

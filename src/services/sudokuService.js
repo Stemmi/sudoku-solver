@@ -48,14 +48,16 @@ const empty = [
     [ , , , , , , , , ]
 ];
 
-function fillZero(sudoku) {
-    const zeroFilledSudoku = createEmpty();
-    for (let row = 0; row <= 8; row++) {
-        for (let col = 0; col <= 8; col++) {
-            zeroFilledSudoku[row][col] = sudoku[row][col] || 0;
+function clone(sudoku) {
+    const cloned = [];
+    for (let r = 0; r <= 8; r++) {
+        const row = [];
+        for (let c = 0; c <= 8; c++) {
+            row.push(sudoku[r][c] || 0);
         }
+        cloned.push(row);
     }
-    return zeroFilledSudoku;
+    return cloned;
 }
 
 function createEmpty() {
@@ -71,9 +73,10 @@ function createEmpty() {
 }
 
 export default {
-    medium: fillZero(medium),
-    easy: fillZero (easy),
-    hard: fillZero (hard),
-    empty: fillZero (empty),
-    createEmpty
+    medium: clone(medium),
+    easy: clone (easy),
+    hard: clone (hard),
+    empty: clone (empty),
+    createEmpty,
+    clone
 }
