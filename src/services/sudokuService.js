@@ -82,5 +82,6 @@ export default {
     hard: clone (hard),
     empty: clone (empty),
     createEmpty,
-    clone
+    clone,
+    check
 }
