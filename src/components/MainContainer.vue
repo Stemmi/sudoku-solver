@@ -5,7 +5,8 @@
             <button class="choose" id="easy">Easy</button>
             <button class="choose" id="medium">Medium</button>
             <button class="choose" id="hard">Hard</button>
-            <button class="choose" id="empty">Empty</button>
+            <br />
+            <button class="choose" id="empty">Empty / Reset</button>
         </div>
         <h2>...or type in a Sudoku here:</h2>
         <!-- <p>Numbers 1-9, or:<br />
@@ -33,16 +34,17 @@
         methods: {
             chooseSudoku(event) {
                 if (event.target.tagName != "BUTTON") return;
-                this.sudoku = sudokuService[event.target.id];
+                this.sudoku = sudokuService.clone(sudokuService[event.target.id]);
             },
             handleValueUpdate(cell) {
                 this.sudoku[cell.index[0]][cell.index[1]] = cell.value;
+                sudokuService.check(this.sudoku, cell);
             },
             solveSudoku() {
                 const solver = new SudokuSolver(this.sudoku);
-                solver.solve();
-                console.log(solver);
-
+                const solvedSudoku = solver.solve();
+                if (solvedSudoku.solved) this.sudoku = solvedSudoku.sudoku;
+                else return // HANDLE UNSOLVABLE SUDOKU
             }
         }
     }
@@ -75,6 +77,15 @@
         border-radius: 20px;
         background-color: rgb(203, 216, 240);
         font-size: 1em;
+    }
+
+    button:hover, input[type=file]::file-selector-button:hover {
+        box-shadow: 0 0px 3px 0 rgba(203, 216, 240,0.8);
+        transform: scale(1.05);
+    }
+
+    button:active {
+        background: rgba(203, 216, 240,0.5);
     }
     /* button.selected {
         border:  1px solid black;

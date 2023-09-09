@@ -72,6 +72,10 @@ function createEmpty() {
     return sudoku;
 }
 
+function check(sudoku, cell) {
+    return;
+}
+
 export default {
     medium: clone(medium),
     easy: clone (easy),

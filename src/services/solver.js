@@ -1,11 +1,9 @@
-import sudokuService from './sudokuService';
-
 class SudokuField {
     /**
      * Creates a single field of a sudoku.
      * @param {number} row The y position of the field
      * @param {number} column The x position of the field
-     * @param {number} value The value of the field: 1-9 or undefined
+     * @param {number} value The value of the field: 1-9 or 0
      */
     constructor(row, column, value) {
         this.row = row;
@@ -19,7 +17,7 @@ class SudokuField {
 class SudokuSolver {
     /**
      * Creates a sudoku solver object.
-     * @param {number[][] || null} sudoku The sudoku to solve as a 9x9 two-dimensional Array of integers from 1 to 9, or empty /'undefined' for unsolved fields.
+     * @param {number[][] || null} sudoku The sudoku to solve as a 9x9 two-dimensional Array of integers from 1 to 9, or empty / 0 for unsolved fields.
      */
     constructor(sudoku) {
         this.solvedFields = 0;
@@ -32,7 +30,7 @@ class SudokuSolver {
             this.sudoku.push([]);
             for (let c = 0; c < 9; c++) {
                 if (sudoku) this.sudoku[r].push(new SudokuField(r, c, sudoku[r][c]));
-                else this.sudoku[r].push(new SudokuField(r, c, undefined));
+                else this.sudoku[r].push(new SudokuField(r, c, 0));
                 if (this.sudoku[r][c].value) this.solvedFields++;
             }
         }
@@ -66,7 +64,7 @@ class SudokuSolver {
 
     /**
      * Sets a field to a specific value.
-     * Sets 'possibleValues' to [value], or to all if 'value' is undefined.
+     * Sets 'possibleValues' to [value], or to all if 'value' is 0.
      * Keeps track of 'removedPossibleValues' and 'solvedFields'.
      * @param {Field} field the Field object
      * @param {number} value the value
@@ -128,7 +126,7 @@ class SudokuSolver {
                     });
                 }
             }
-            if (found.length ===1 ) this.setField(found[0].field, found[0].number);
+            if (found.length === 1 ) this.setField(found[0].field, found[0].number);
         }
     }
 
@@ -167,7 +165,7 @@ class SudokuSolver {
      * Starts solving rounds as long as there is progress.
      * If no more progress is possible, it starts guessing numbers.
      * @param {boolean} visible - Should the result be printed out? 
-     * @returns {boolean} if the Sudoku has been solved or not.
+     * @returns {Object} containing a boolean 'solved' and, if solved, the solved sudoku.
      */
     solve(visible = true) {
         let solved = false;
@@ -176,13 +174,19 @@ class SudokuSolver {
             solved = this.solvedFields === 81;
             if (solved) break;
         }
-        if (!this.solvable) return false;
+        if (!this.solvable) return { solved: false };
         if (!solved) {
-            if (!this.guess()) return false;
+            if (!this.guess()) return { solved: false };
             else solved = this.solvedFields === 81;
         }
-        if (visible) this.print();
-        return solved;
+        if (visible) {
+            // this.print();
+        }
+        if (!solved) return { solved: false };
+        else return {
+            solved: true,
+            sudoku: this.extractValues(this.sudoku)
+        };
     }
 
     /**
@@ -192,9 +196,10 @@ class SudokuSolver {
      * @returns {boolean} if the guessing was succesful or not.
      */
     guess() {
-        let emptyField = undefined;
+        // this.print();
+        let emptyField = {};
         for (let row of this.sudoku) {
-            emptyField = row.find(col => col.value == undefined);
+            emptyField = row.find(col => col.value === 0);
             if (emptyField) break;
         }
 
@@ -210,17 +215,17 @@ class SudokuSolver {
         const guesser = new SudokuSolver();
         let possible = field.possibleValues;
         for (let p = 0; p < possible.length; p++) {
-            guesser.sudoku = sudokuService.clone(this.sudoku);
+            guesser.sudoku = this.clone(this.sudoku);
             guesser.solvedFields = this.solvedFields;
             guesser.removedPossibleValues = this.removedPossibleValues;
             guesser.rounds = this.rounds;
             guesser.solvable = this.solvable;
             
             guesser.setField(guesser.sudoku[field.row][field.col], possible[p]);
-            let solved = guesser.solve(false);
+            let solved = (guesser.solve(false)).solved;
             
             if (solved) {
-                this.sudoku = sudokuService.clone(guesser.sudoku);
+                this.sudoku = this.clone(guesser.sudoku);
                 this.solvedFields = guesser.solvedFields;
                 this.removedPossibleValues = guesser.removedPossibleValues;
                 this.rounds = guesser.rounds;
@@ -253,6 +258,26 @@ class SudokuSolver {
             console.log(rowString + '|');
         }
         console.log('+---------+---------+---------+');
+    }
+
+    clone(sudoku) {
+        const cloned = [];
+        for (let r = 0; r <= 8; r++) {
+            const row = [];
+            for (let c = 0; c <= 8; c++) {
+                row.push( { ...sudoku[r][c] } );
+            }
+            cloned.push(row);
+        }
+        return cloned;
+    }
+
+    extractValues(sudoku) {
+        const sudokuArray = [];
+        for (let i = 0; i < 9; i++) {
+            sudokuArray[i] = sudoku[i].map(field => field.value);
+        }
+        return sudokuArray;
     }
 }
 
