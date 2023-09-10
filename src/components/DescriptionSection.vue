@@ -11,6 +11,9 @@
         </p>
         <p>On the to do list for improvement:
             Pasting a Sudoku in different formats, giving better feedback for invalid typing.</p>
+        <p>Source code: <a href="https://github.com/Stemmi/sudoku-solver" target="_blank">https://github.com/Stemmi/sudoku-solver</a></p>
+        <p>Have fun!</p>
+        <p>Christian</p>
     </section>
 </template>
 
