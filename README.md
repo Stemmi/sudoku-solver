@@ -5,6 +5,11 @@ I programmed the underlying program logic in JavaScript in 2021 as an exercise d
 
 The frontend was added in 2023. Just type in the numbers or choose an example.
 
+Try it here: <https://studiostemmi.de/sudokusolver/>
+
 On the to do list for improvement:
 - Giving better feedback for invalid typing
 - Pasting a Sudoku in different formats
+
+Have fun!
+Christian
