@@ -1,27 +1,22 @@
 <template>
     <main>
-        <p>Type or paste a Sudoku here:</p>
-        
-        <SudokuField />
-        <button>Solve</button><br />
-        Text / Description<br />
+        <SudokuSection />
+        <DescriptionSection />
     </main>
 </template>
 
 <script>
-    import SudokuField from './SudokuField.vue';
+    import SudokuSection from './SudokuSection.vue';
+    import DescriptionSection from './DescriptionSection.vue';
 
     export default {
         components: {
-            SudokuField
+            SudokuSection,
+            DescriptionSection
         }
     }
 </script>
 
+<style scoped>
 
-
-<style>
-    h1 {
-        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    }
 </style>

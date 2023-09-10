@@ -1,44 +1,70 @@
 <template>
     <table>
-        
-        <SudokuRow v-for="row in sudoku" :row="row"/>
-
+        <tr v-for="row, rowIndex in sudoku">
+            <SudokuCell
+                v-for="cell, columnIndex in row"
+                :cell="cell"
+                :selectedIndex="selectedIndex"
+                :cellIndex="[rowIndex, columnIndex]"
+                @updateSelected="select"
+                @updateValue="handleValueUpdate"
+            />
+        </tr>
     </table>
 </template>
 
 <script>
-    import SudokuRow from './SudokuRow.vue';
-
+    import SudokuCell from './SudokuCell.vue';
+    import sudokuService from '../services/sudokuService.js';
+    
     export default {
         components: {
-            SudokuRow
+            SudokuCell
         },
         data() {
             return {
-                sudoku: this.createEmptySudoku()
+                selectedIndex: [0,0]
             }
         },
+        props: [
+            "sudoku"
+        ],
+        emits: [
+            "updateSudoku"
+        ],
         methods: {
-            createEmptySudoku() {
-                const sudoku = [];
-                for (let i = 0; i < 9; i++) {
-                    const row = [];
-                    for (let j = 0; j < 9; j++) {
-                        row.push(0);
-                    }
-                    sudoku.push(row);
+            selectNext() {
+                this.selectedIndex[1]++;
+                if (this.selectedIndex[1] > 8) {
+                    this.selectedIndex[0]++;
+                    this.selectedIndex[1] = 0;
                 }
-                return sudoku;
+                if (this.selectedIndex[0] > 8) {
+                    this.selectedIndex = [8,8];
+                    // this.selectSolveButton();
+                }
+            },
+            select(index) {
+                this.selectedIndex = index;
+            },
+            // selectSolveButton() {
+            //     return;
+            // },
+            handleValueUpdate(cell) {
+                const check = sudokuService.check(this.sudoku, cell);
+                if (check.passed) {
+                    this.$emit('updateSudoku', cell);
+                    this.selectNext();
+                    return;
+                }
             }
         }
     }
 </script>
 
-
-
-<style>
+<style scoped>
     table {
-        margin: 10px 0;
+        margin: 10px auto;
         border-collapse: collapse;
         border: 2px solid black;
     }
@@ -57,5 +83,4 @@
     td:nth-child(3n+3) {
         border-right: 2px solid black;
     }
-
 </style>
