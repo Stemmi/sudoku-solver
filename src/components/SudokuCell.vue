@@ -100,6 +100,10 @@
 </script>
 
 <style scoped>
+    span {
+        font-size: 1.5em;
+    }
+    
     input {
         font-size: 1.5em;
         width: 100%;
