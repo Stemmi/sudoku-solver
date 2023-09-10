@@ -15,6 +15,7 @@
 
 <script>
     import SudokuCell from './SudokuCell.vue';
+    import sudokuService from '../services/sudokuService.js';
     
     export default {
         components: {
@@ -50,8 +51,14 @@
             //     return;
             // },
             handleValueUpdate(cell) {
-                this.$emit('updateSudoku', cell);
-                this.selectNext();
+                const check = sudokuService.check(this.sudoku, cell);
+                console.log(check);
+
+                if (check.passed) {
+                    this.$emit('updateSudoku', cell);
+                    this.selectNext();
+                    return;
+                }
             }
         }
     }

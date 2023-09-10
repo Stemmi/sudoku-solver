@@ -46,6 +46,7 @@
                     index: this.cellIndex,
                     value: +event.target.value
                 })
+                this.$refs.inputForm.reset();
             },
             handleSpecialKeys(event) {
                 let targetIndex = [this.cellIndex[0],this.cellIndex[1]];
@@ -87,7 +88,6 @@
         computed: {
             value() {
                 return this.cell || '';
-                // return this.cell;
             },
             isSelected() {
                 if (!this.selectedIndex) return false;
