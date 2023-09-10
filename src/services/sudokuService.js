@@ -73,7 +73,54 @@ function createEmpty() {
 }
 
 function check(sudoku, cell) {
-    return;
+    const value = cell.value;
+    if (value === 0) return { passed: true };
+
+    const rowIndex = cell.index[0];
+    const colIndex = cell.index[1];
+    const squareIndex = Math.trunc(rowIndex / 3) * 3 + Math.trunc(colIndex / 3);
+    console.log(sudoku, cell);
+
+    const row = sudoku[rowIndex];
+    if (hasValue({arr: row, index: colIndex, value: value})) {
+        return {
+            passed: false,
+            reason: 'row'
+        }
+    }
+    const column = sudoku.map(current => current[colIndex]);
+    if (hasValue({arr: column, index: rowIndex, value: value})) {
+        return {
+            passed: false,
+            reason: 'column'
+        }
+    }
+    const square = getSquare(squareIndex, sudoku);
+    const cellInSquareIndex = (rowIndex % 3) * 3 + (colIndex % 3);
+    if (hasValue({arr: square, index: cellInSquareIndex, value: value})) {
+        return {
+            passed: false,
+            reason: 'square'
+        }
+    }
+
+    return { passed: true };
+}
+
+function hasValue({arr, index, value}) {
+    return (arr.includes(value) && arr.indexOf(value) != index);
+}
+
+function getSquare(sqrIndex, sudoku) {
+    let square = [];
+    let rowStart = Math.trunc(sqrIndex / 3) * 3;
+    let colStart = (sqrIndex % 3) * 3;
+    for (let row = rowStart; row < rowStart + 3; row++) {
+        for (let col = colStart; col < colStart + 3; col++) {
+            square.push(sudoku[row][col]);
+        }
+    }
+    return square;
 }
 
 export default {

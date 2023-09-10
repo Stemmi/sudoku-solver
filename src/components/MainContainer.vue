@@ -37,8 +37,14 @@
                 this.sudoku = sudokuService.clone(sudokuService[event.target.id]);
             },
             handleValueUpdate(cell) {
-                this.sudoku[cell.index[0]][cell.index[1]] = cell.value;
-                sudokuService.check(this.sudoku, cell);
+                const check = sudokuService.check(this.sudoku, cell);
+                console.log(check);
+
+                if (check.passed) {
+                    this.sudoku[cell.index[0]][cell.index[1]] = cell.value;
+                    return;
+                }
+                // console.log(check);
             },
             solveSudoku() {
                 const solver = new SudokuSolver(this.sudoku);
