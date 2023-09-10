@@ -99,9 +99,7 @@
     }
 </script>
 
-
-
-<style>
+<style scoped>
     input {
         font-size: 1.5em;
         width: 100%;

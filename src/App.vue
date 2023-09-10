@@ -7,7 +7,6 @@
     import HeaderContainer from './components/HeaderContainer.vue';
     import MainContainer from './components/MainContainer.vue';
 
-
     export default {
         components: {
             HeaderContainer,
@@ -18,6 +17,6 @@
 
 
 
-<style>
+<style scoped>
 
 </style>

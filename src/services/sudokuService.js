@@ -79,7 +79,6 @@ function check(sudoku, cell) {
     const rowIndex = cell.index[0];
     const colIndex = cell.index[1];
     const squareIndex = Math.trunc(rowIndex / 3) * 3 + Math.trunc(colIndex / 3);
-    console.log(sudoku, cell);
 
     const row = sudoku[rowIndex];
     if (hasValue({arr: row, index: colIndex, value: value})) {

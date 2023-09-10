@@ -8,9 +8,7 @@
 
 </script>
 
-
-
-<style>
+<style scoped>
     h1 {
         font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         text-align: center;

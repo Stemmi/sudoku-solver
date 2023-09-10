@@ -52,8 +52,6 @@
             // },
             handleValueUpdate(cell) {
                 const check = sudokuService.check(this.sudoku, cell);
-                console.log(check);
-
                 if (check.passed) {
                     this.$emit('updateSudoku', cell);
                     this.selectNext();
@@ -64,7 +62,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     table {
         margin: 10px auto;
         border-collapse: collapse;
@@ -85,5 +83,4 @@
     td:nth-child(3n+3) {
         border-right: 2px solid black;
     }
-
 </style>
