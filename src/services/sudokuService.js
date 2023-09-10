@@ -127,7 +127,7 @@ export default {
     medium: clone(medium),
     easy: clone (easy),
     hard: clone (hard),
-    empty: clone (empty),
+    empty: createEmpty(),
     createEmpty,
     clone,
     check

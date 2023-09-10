@@ -44,7 +44,6 @@
                     this.sudoku[cell.index[0]][cell.index[1]] = cell.value;
                     return;
                 }
-                // console.log(check);
             },
             solveSudoku() {
                 const solver = new SudokuSolver(this.sudoku);
