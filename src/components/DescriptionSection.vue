@@ -1,5 +1,6 @@
 <template>
     <section>
+        <p>Solve Sudokus instantly!</p>
         <p>I programmed the underlying program logic in JavaScript in 2021 as an exercise during a Covid illness.
             In the first place I wanted to build something in a well-organized, strictly object-orientated design.
             For the Sudoku-solving, it was important for me to try out and combine different approaches and to learn how well human approaches can be translated into computer language.
@@ -27,11 +28,5 @@
     p, ul {
         text-align: left;
         font-size: 1.1em;
-    }
-
-    @media screen and (min-width: 992px) {
-        section {
-            margin-top: 44px;
-        }
     }
 </style>
