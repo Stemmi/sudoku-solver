@@ -42,6 +42,11 @@ p {
     margin: 15px;
 }
 
+ul {
+    margin: 15px;
+    list-style-position: inside;
+}
+
 @media screen and (min-width: 992px) {
     main {
         width: 800px;
