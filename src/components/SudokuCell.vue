@@ -2,6 +2,7 @@
     <td @click="select">
         <form ref="inputForm" v-if="isSelected">
             <input
+                id="number"    
                 :value="inputValue"
                 :placeholder="cell||' '"
                 type="text"
