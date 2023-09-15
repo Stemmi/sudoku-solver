@@ -6,6 +6,8 @@
                 :value="inputValue"
                 :placeholder="cell||' '"
                 type="text"
+                inputmode="numeric"
+                pattern="\d"
                 size="1"
                 @vue:mounted="({ el }) => el.focus()"
                 @input="updateValue"
