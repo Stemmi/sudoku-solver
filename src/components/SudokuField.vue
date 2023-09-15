@@ -71,8 +71,8 @@
 
     td {
         border: 1px solid grey;
-        width: 40px;
-        height: 40px;
+        width: 36px;
+        height: 36px;
         text-align: center;
     }
 
