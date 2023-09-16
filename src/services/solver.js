@@ -196,7 +196,6 @@ class SudokuSolver {
      * @returns {boolean} if the guessing was succesful or not.
      */
     guess() {
-        // this.print();
         let emptyField = {};
         for (let row of this.sudoku) {
             emptyField = row.find(col => col.value === 0);
@@ -204,8 +203,8 @@ class SudokuSolver {
         }
 
         if (!emptyField) {
-            console.log('No empty field found!');
-            this.print();
+            // console.log('No empty field found!');
+            // this.print();
             return false;
         }      
 
